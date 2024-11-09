@@ -4,6 +4,7 @@ const color = require("gradient-string");
 const chalk = require("chalk");
 const config = require("../config.json");
 const font = require("fontstyles");
+const axios = require("axios");
 
 function html(res) {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -135,8 +136,36 @@ function logUnknownTheme(theme) {
   console.log(`The theme "${theme}" is not recognized. Using the default theme instead.`);
 };
 
+async function checkForUpdates() {
+  // Load local package.json version
+  const localPackagePath = path.join(__dirname, "../package.json");
+  const localPackage = JSON.parse(fs.readFileSync(localPackagePath, "utf8"));
+  const localVersion = localPackage.version;
+
+  // URL for remote package.json
+  const remotePackageUrl = "https://raw.githubusercontent.com/YANDEVA/Pagebot/refs/heads/main/package.json";
+
+  try {
+    // Fetch remote package.json
+    const response = await axios.get(remotePackageUrl);
+    const remoteVersion = response.data.version;
+
+    // Compare versions
+    if (remoteVersion !== localVersion) {
+      setTimeout(() => {
+        console.log(`${colorGradient(`SYSTEM:`)} A new version is available! Local: ${colorGradient(localVersion)}, Remote: ${colorGradient(remoteVersion)}`);
+      }, 4500);
+    }
+  } catch (error) {
+    console.error("Failed to check for updates:", error.message);
+  }
+}
+
 // Main log function with theme and admin information display
 function log() {
+  // Call the update checker function
+  checkForUpdates();
+
   const title = config.THEME_SETUP.TITLE || "";
   const asciiTitle = generateAsciiArt(title);
   console.log(colorGradient.multiline(asciiTitle));

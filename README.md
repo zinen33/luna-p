@@ -2,7 +2,11 @@
 
 Pagebot (PBOT) is a user-friendly Facebook Page Bot builder designed to make bot creation and management easy—perfect for both beginners and experienced developers. With intuitive tools, you can have your bot up and running in minutes!
 
-![Pagebot Cover](https://i.ibb.co/FqXPcR8/pagebot.png)
+<div align="center">
+  <a href="https://m.me/pekoai" target="_blank">
+    <img src="https://i.ibb.co/FqXPcR8/pagebot.png" alt="Pagebot Cover" width="500"/>
+  </a>
+</div>
 
 ## Features
 
@@ -12,7 +16,7 @@ Pagebot (PBOT) is a user-friendly Facebook Page Bot builder designed to make bot
 
 ## Why Choose Pagebot?
 
-PBOT was designed with accessibility in mind, making bot-building straightforward for users of all skill levels. Whether you're new to programming or simply looking for an efficient tool to manage your Facebook Page Bot, PBOT has you covered. Developed by [Yan Maglinte]🇵🇭(https://www.facebook.com/yandeva.me), a passionate solo developer dedicated to empowering others.
+PBOT was designed with accessibility in mind, making bot-building straightforward for users of all skill levels. Whether you're new to programming or simply looking for an efficient tool to manage your Facebook Page Bot, PBOT has you covered. Developed by [Yan Maglinte](https://www.facebook.com/yandeva.me) 🇵🇭, a passionate solo developer dedicated to empowering others.
 
 ## Getting Started
 
@@ -30,7 +34,7 @@ PBOT is open to contributions! If you'd like to suggest features, report bugs, o
   <h3>Try my Bot!</h3>
   <p>Try Peko, a Facebook Pagebot assistant.<br>Just click the image below to start chatting!</p>
   <a href="https://m.me/pekoai" target="_blank">
-    <img src="https://i.ibb.co/qkTCVv9/circle.png" alt="Peko Bot" width="50"/>
+    <img src="https://i.ibb.co/qkTCVv9/circle.png" alt="Peko Bot" width="80"/>
   </a>
 </div>
 
