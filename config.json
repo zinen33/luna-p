@@ -1,0 +1,13 @@
+{
+  "PAGE_ACCESS_TOKEN": "",
+  "VERIFY_TOKEN": "WEBHOOK",
+  "ADMINS": [""],
+  "BOTNAME": "BOTNAME",
+  "PREFIX": "/",
+  "THEME_SETUP": {
+    "THEME": "Fiery",
+    "ADMIN": "Your Name",
+    "TITLE": "PAGEBOT"
+  },
+  "selfListen": false
+}
