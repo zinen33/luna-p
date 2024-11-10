@@ -67,15 +67,7 @@ This API function allows you to send reactions to Facebook messages using the Fa
 
 ## Usage
 
-### 1. Import and Setup
-
-```javascript
-const setMessageReaction = require('path_to_this_file');
-```
-
-### 2. Call the Function
-
-Use the `setMessageReaction` function to send a reaction to a message by providing the desired reaction type and message ID.
+Use the `api.setMessageReaction` function to send a reaction to a message by providing the desired reaction type and message ID.
 
 #### Parameters:
 - `reaction` (string): The type of reaction you want to send. Supported values are: `LIKE`, `LOVE`, `HAHA`, `WOW`, `SAD`, and `ANGRY`.
@@ -85,15 +77,21 @@ Use the `setMessageReaction` function to send a reaction to a message by providi
 
 ```javascript
 const reaction = 'LIKE'; // or 'LOVE', 'HAHA', etc.
-const messageId = '1234567890123456'; // The ID of the message to react to
+const messageId = '1234567890123456'; // The ID of the message to react
 
-setMessageReaction(reaction, messageId)
+api.setMessageReaction(reaction, messageId)
   .then(response => {
     console.log('Reaction sent:', response);
   })
   .catch(error => {
     console.error('Error sending reaction:', error);
   });
+```
+
+or, simply like this:
+
+```javascript
+api.setMessageReaction('LIKE', '1234567890123456');
 ```
 
 ### 3. Error Handling
@@ -402,7 +400,7 @@ Events are suited for background tasks, global listeners, and anything that does
 | **Trigger**  | User-initiated, needs specific text          | Passively listens for actions or messages |
 | **Prefix**   | Requires a prefix if `usePrefix` is `true`   | Does not need a prefix                    |
 | **Use Case** | Feature-triggered actions, user commands     | Background tasks, system actions, global listeners |
-| **Config Properties** | `name`, `usePrefix`, `adminOnly` | `name`, `selfListen`, `description` |
+| **Config Properties** | `name`, `author`, `version`, `category`, `description`, `adminOnly`, `usePrefix`, `cooldown` | `name`, `author`, `version`, `description` `selfListen`, |
 
 By keeping Commands and Events distinct, the framework allows targeted control over user-triggered interactions and system-wide listeners.
 
@@ -426,11 +424,35 @@ This gives the user context on what the event types are and how they are trigger
 
 ---
 
-### Available Themes
-- Fiery
-- Hacker
-- Aqua
-- Blue
+### Available Terminal Themes
+
+Choose from one of the following terminal themes:
+
+|                | Theme Options |              |
+|---------------|---------------|---------------|
+| Fiery         | Sunlight      | Ghost         |
+| Hacker        | Retro         | Purple        |
+| Aqua          | Teen          | Rainbow       |
+| Blue          | Summer        | Orange        |
+| Pink          | Flower        | Red           |
+
+---
+
+#### Setting Up Your Terminal Theme
+
+You can configure the terminal theme in the `config.json` file, along with the admin name and title displayed in the terminal.
+
+```json
+{
+  "THEME_SETUP": {
+    "THEME": "Fiery",
+    "ADMIN": "Your Name",
+    "TITLE": "PAGEBOT"
+  }
+}
+```
+
+Simply replace `"Fiery"`, `"Your Name"`, and `"PAGEBOT"` with your preferred theme, name, and title to personalize your terminal experience.
 
 --- 
 

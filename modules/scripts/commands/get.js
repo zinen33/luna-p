@@ -6,6 +6,7 @@ module.exports.config = {
   description: "Sends the user's recipient ID", // Command's description
   adminOnly: true, // Only admins can use this command
   usePrefix: true, // Will use a PREFIX if its true to activate this command
+  cooldown: 0, // cooldown time in seconds
 };
 
 // The code scripts runs here

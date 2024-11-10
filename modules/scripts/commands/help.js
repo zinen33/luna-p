@@ -10,6 +10,7 @@ module.exports.config = {
     "Sends a back greeting message and lists all commands and events.",
   adminOnly: false,
   usePrefix: true,
+  cooldown: 5, // Cooldown time in seconds
 };
 
 module.exports.run = function ({ event, args }) {

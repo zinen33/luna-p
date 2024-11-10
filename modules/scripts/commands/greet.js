@@ -6,6 +6,7 @@ module.exports.config = {
   description: "Sends a back greeting message.", // Command's description
   adminOnly: false, // Only admins can use this command
   usePrefix: false, // Will use a PREFIX if its true to activate this command
+  cooldown: 3, // Cooldown time in seconds
 };
 
 // The code scripts runs here

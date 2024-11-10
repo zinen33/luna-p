@@ -5,7 +5,8 @@ module.exports.config = {
   category: "Utility", // Category for organization in help commands
   description: "Sends a button message.", // Description of the command
   adminOnly: false, // Restrict command usage to admins only if set to true
-  usePrefix: true // Activates command only if prefixed, when set to true
+  usePrefix: true, // Activates command only if prefixed, when set to true
+  cooldown: 5
 };
 
 // Main code execution starts here

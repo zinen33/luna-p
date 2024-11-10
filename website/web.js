@@ -106,9 +106,64 @@ switch (theme) {
     logTheme("Hacker");
     break;
   case "blue":
-    colorGradient = color("#243aff", "#4687f0", "#5800d4");
+    colorGradient = color("#1702CF", "#11019F ", "#1401BF");
     colorChalk = chalk.blueBright;
     logTheme("Blue");
+    break;
+  case "pink":
+    colorGradient = color("#ab68ed", "#ea3ef0", "#c93ef0");
+    colorChalk = chalk.hex("#8c00ff");
+    logTheme("Pink");
+    break;
+  case "sunlight":
+    colorGradient = color("#ffae00", "#ffbf00", "#ffdd00");
+    colorChalk = chalk.hex("#f6ff00");
+    logTheme("Sunlight");
+    break;
+  case "retro":
+    colorGradient = color.retro;
+    colorChalk = chalk.hex("#7d02bf");
+    logTheme("Retro");
+    break;
+  case "teen":
+    colorGradient = color.teen;
+    colorChalk = chalk.hex("#fa7f7f");
+    logTheme("Teen");
+    break;
+  case "summer":
+    colorGradient = color.summer;
+    colorChalk = chalk.hex("#f7f565");
+    logTheme("Summer");
+    break;
+  case "flower":
+    colorGradient = color.pastel;
+    colorChalk = chalk.hex("#6ded85");
+    logTheme("Flower");
+    break;
+  case "ghost":
+    colorGradient = color.mind;
+    colorChalk = chalk.hex("#95d0de");
+    logTheme("Ghost");
+    break;
+  case "purple":
+    colorGradient = color("#380478", "#5800d4", "#4687f0");
+    colorChalk = chalk.hex('#7a039e');
+    logTheme("Purple");
+    break;
+  case "rainbow":
+    colorGradient = color.rainbow;
+    colorChalk = chalk.hex('#0cb3eb');
+    logTheme("Rainbow");
+    break;
+  case "orange":
+    colorGradient = color("#ff8c08", "#ffad08", "#f5bb47");
+    colorChalk = chalk.hex('#ff8400');
+    logTheme("Orange");
+    break;
+  case "red":
+    colorGradient = color("#ff0000", "#ff0026");
+    colorChalk = chalk.hex("#ff4747");
+    logTheme("Red");
     break;
     // You can add your own default themes here, using the same method above and using hex color
   default:
@@ -152,9 +207,34 @@ async function checkForUpdates() {
 
     // Compare versions
     if (remoteVersion !== localVersion) {
-      setTimeout(() => {
-        console.log(`${colorGradient(`SYSTEM:`)} A new version is available! Local: ${colorGradient(localVersion)}, Remote: ${colorGradient(remoteVersion)}`);
-      }, 4500);
+      const localParts = localVersion.split('.').map(Number);
+      const remoteParts = remoteVersion.split('.').map(Number);
+
+      let isLocalNewer = false;
+      for (let i = 0; i < Math.max(localParts.length, remoteParts.length); i++) {
+        const localPart = localParts[i] || 0;
+        const remotePart = remoteParts[i] || 0;
+
+        if (localPart > remotePart) {
+          isLocalNewer = true;
+          break;
+        } else if (localPart < remotePart) {
+          isLocalNewer = false;
+          break;
+        }
+      }
+
+      if (isLocalNewer) {
+        setTimeout(() => {
+          console.log(`${colorGradient(`SYSTEM:`)} Your local version (${colorGradient(localVersion)}) is ahead of the remote version (${colorGradient(remoteVersion)}).`);
+          console.log(`${colorGradient(`SYSTEM:`)} You may be using a development or unreleased version.`);
+        }, 4000);
+      } else {
+        setTimeout(() => {
+          console.log(`${colorGradient(`SYSTEM:`)} A new version is available! Local: ${colorGradient(localVersion)}, Remote: ${colorGradient(remoteVersion)}`);
+          console.log(`${colorGradient(`SYSTEM:`)} Update now! ${colorGradient(`https://github.com/YANDEVA/Pagebot`)}`);
+        }, 4000);
+      }
     }
   } catch (error) {
     console.error("Failed to check for updates:", error.message);

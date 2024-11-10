@@ -4,7 +4,7 @@ Pagebot (PBOT) is a user-friendly Facebook Page Bot builder designed to make bot
 
 <div align="center">
   <a href="https://m.me/pekoai" target="_blank">
-    <img src="https://i.ibb.co/FqXPcR8/pagebot.png" alt="Pagebot Cover" width="500"/>
+    <img src="https://i.ibb.co/5T8bq2P/pagebot.png" alt="Pagebot Cover" width="500"/>
   </a>
 </div>
 
@@ -42,4 +42,6 @@ PBOT is open to contributions! If you'd like to suggest features, report bugs, o
 
 ### License
 
-Pagebot is available under the [MIT License](LICENSE).
+Pagebot is released under the [MIT License](LICENSE), making it free to use, modify, and distribute under the terms of this open-source license.
+
+*Created on November 8, 2024*  

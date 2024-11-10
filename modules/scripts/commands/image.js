@@ -6,6 +6,7 @@ module.exports.config = {
   description: "Sends an attachment.",
   adminOnly: false, 
   usePrefix: true,
+  cooldown: 5, // Cooldown time in seconds
 };
 
 module.exports.run = function ({ event, args }) {
