@@ -207,6 +207,7 @@ async function checkForUpdates() {
 
     // Compare versions
     if (remoteVersion !== localVersion) {
+      // Check if local version is ahead
       const localParts = localVersion.split('.').map(Number);
       const remoteParts = remoteVersion.split('.').map(Number);
 
@@ -228,12 +229,12 @@ async function checkForUpdates() {
         setTimeout(() => {
           console.log(`${colorGradient(`SYSTEM:`)} Your local version (${colorGradient(localVersion)}) is ahead of the remote version (${colorGradient(remoteVersion)}).`);
           console.log(`${colorGradient(`SYSTEM:`)} You may be using a development or unreleased version.`);
-        }, 4000);
+        }, 4500);
       } else {
         setTimeout(() => {
           console.log(`${colorGradient(`SYSTEM:`)} A new version is available! Local: ${colorGradient(localVersion)}, Remote: ${colorGradient(remoteVersion)}`);
           console.log(`${colorGradient(`SYSTEM:`)} Update now! ${colorGradient(`https://github.com/YANDEVA/Pagebot`)}`);
-        }, 4000);
+        }, 4500);
       }
     }
   } catch (error) {
