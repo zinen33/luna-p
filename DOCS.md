@@ -17,7 +17,9 @@ api.sendMessage("Hello", event.sender.id);
 or, with a promise:
 ```javascript
 api.sendMessage("Hello", event.sender.id).then((res) => {
-  console.log(res);
+  console.log(res).catch((err) => {
+    console.error(err);
+  });
 });
 ```
 
@@ -46,8 +48,192 @@ or, with a promise:
 ```javascript
 api.sendTypingIndicator(false, event.sender.id).then((res) => {
   console.log(res);
+}).catch((err) => {
+  console.error(err);
 });
 ```
+
+---
+
+# API Button Sender
+
+A simple and flexible API for sending buttons (text buttons, URL buttons, postback buttons) to users on Facebook Messenger. This function allows you to send a rich message that includes interactive buttons like `Call to Action` buttons.
+
+## Usage
+
+The `api.sendButton` function allows you to send interactive buttons that a user can click, leading to a postback event or opening a URL.
+
+### Example Usage:
+
+```javascript
+// Sending a single button
+const buttons = [
+  {
+    type: "web_url",
+    title: "Visit Website",
+    url: "https://www.facebook.com/yandeva.me",
+  },
+];
+
+api.sendButton("Here is a button!", buttons, senderID)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+
+// Sending multiple buttons (e.g., postback buttons)
+const postback = [
+  {
+    type: "postback",
+    title: "Click Me!",
+    payload: "USER_CLICKED_BUTTON",
+  },
+  {
+    type: "web_url",
+    title: "Visit Website",
+    url: "https://www.facebook.com/yandeva.me",
+  },
+  {
+    type: "web_url",
+    title: "Chat Me",
+    url: "m.me/pekoai",
+  },
+];
+
+api.sendButton("Click a button!", postback, senderID)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+```
+
+### Supported Button Types
+
+- **`web_url`**: Opens a URL when clicked (ideal for external links).
+- **`postback`**: Sends a postback event when clicked (ideal for triggering specific bot actions).
+
+### Parameters
+
+- **`messageText`** (string): The text content that accompanies the buttons. This can include any message you want the user to see along with the buttons.
+- **`buttons`** (array): An array of buttons to send, where each button is an object containing:
+  - **`type`** (string): The button type. Can be one of:
+    - `'web_url'`: A button that opens a URL.
+    - `'postback'`: A button that sends a postback to the bot.
+  - **`title`** (string): The text to display on the button.
+  - **`url`** (string, optional): The URL to open when the button is clicked. Required for `web_url` type buttons.
+  - **`payload`** (string, optional): The payload to send when the button is clicked. Required for `postback` type buttons.
+- **`senderID`** (string): The ID of the recipient. If not provided, it will use the sender ID from the event.
+
+### Response
+
+The function returns a promise that resolves with the response from the Facebook Graph API, which will contain information about the sent message or an error if something goes wrong.
+
+### Example Response:
+
+```json
+{
+  "recipient_id": "123456789",
+  "message_id": "m_123456789"
+}
+```
+
+## Notes
+
+- **Buttons Layout**: You can send a maximum of 3 buttons per message. If you need to send more, consider breaking the message into multiple parts or creating a more complex button template.
+
+- **Button Limitations**: Only `web_url` and `postback` are supported as button types. The payload for `postback` buttons should be a string that you can use to trigger specific actions in your bot.
+
+- **Access Tokens**: Ensure that your `PAGE_ACCESS_TOKEN` is properly set up. This token is required for authenticating requests to the Facebook Graph API.
+
+---
+
+# API Attachment Sender
+
+A simple and flexible API for sending various types of attachments (file, image, audio, video, etc.) via Facebook Messenger using the Graph API. This function supports sending both file uploads and URL-based attachments.
+
+## Usage
+
+The `api.sendAttachment` function is used to send different types of attachments, including files, images, audio, and video, to a recipient via Facebook Messenger.
+
+### Example Usage:
+
+```javascript
+// Sending a file
+api.sendAttachment('file', 'path/to/your/file.pdf', event.sender.id)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+
+// Sending an image URL
+api.sendAttachment('image', 'https://example.com/image.jpg', event.sender.id)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+
+// Sending an audio URL
+api.sendAttachment('audio', 'https://example.com/audio.mp3', event.sender.id)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+
+// Sending a video URL
+api.sendAttachment('video', 'https://example.com/video.mp4', event.sender.id)
+  .then(response => console.log(response))
+  .catch(error => console.error(error));
+```
+
+### Supported Attachment Types
+
+- **`file`**: Upload and send a file attachment (e.g., PDFs, documents, etc.).
+- **`image`**: Send an image URL as an attachment.
+- **`audio`**: Send an audio URL as an attachment.
+- **`video`**: Send a video URL as an attachment.
+
+You can extend the list of supported types by adding new types to the `supportedTypes` array in the code.
+
+### Parameters
+
+- **`attachmentType`** (string): The type of the attachment. Can be one of the following:
+  - `'file'`: For file uploads.
+  - `'image'`: For image URLs.
+  - `'audio'`: For audio URLs.
+  - `'video'`: For video URLs.
+
+- **`attachment`** (string): The attachment content. This can either be:
+  - A **file path** (e.g., `'path/to/file.pdf'`) for file uploads.
+  - A **URL** (e.g., `'https://example.com/image.jpg'`) for image, audio, or video URLs.
+
+- **`senderID`** (string): The ID of the recipient. If not provided, it will use the sender ID from the event.
+
+### Response
+
+The function returns a promise that resolves with the response from the Facebook Graph API, which will contain information about the sent message or an error if something goes wrong.
+
+### Example Response:
+
+```json
+{
+  "recipient_id": "123456789",
+  "message_id": "m_123456789",
+  "attachment_id": "attach_987654321"
+}
+```
+
+### Error Handling
+
+If an error occurs, the function will throw an error with details about what went wrong. For example:
+
+```json
+{
+  "error": {
+    "message": "(#100) Param message[attachment][type] is not supported. Please check developer docs for details",
+    "type": "OAuthException",
+    "code": 100,
+    "fbtrace_id": "ACRTjqIJmOIwRF0u868-JSM"
+  }
+}
+```
+
+## Notes
+
+- **File Upload Limitations**: When sending a file, the file must be uploaded to Facebook first. The function handles the upload and retrieval of the attachment ID, which is then used to send the message.
+
+- **Supported Facebook Graph API Versions**: This function is compatible with `v20.0` of the Facebook Graph API. Make sure your API version is aligned with this.
+
+- **Access Tokens**: Make sure that your `PAGE_ACCESS_TOKEN` is set up correctly. This token is required to authenticate requests to the Facebook Graph API.
 
 ---
 
@@ -129,6 +315,15 @@ api.markAsSeen(true, event.sender.id);
 To mark a message as unseen:
 ```javascript
 api.markAsSeen(false, event.sender.id);
+```
+
+or, with a promise:
+```javascript
+api.markAsSeen(false, event.sender.id).then((res) => {
+  console.log(res);
+}).catch((err) => {
+  console.log(err);
+});
 ```
 
 ---
@@ -333,6 +528,7 @@ module.exports.config = {
   description: "Sends a greeting message.",
   adminOnly: false,
   usePrefix: true,
+  cooldown: 5
 };
 
 module.exports.run = function ({ event, args }) {
@@ -348,6 +544,7 @@ module.exports.run = function ({ event, args }) {
 Commands are ideal for specific, user-directed actions where structured responses are required, such as:
 - **Bot Features**: `/help` to list commands or `/profile` to show user details.
 - **Quick Interactions**: `/greet` to send a greeting message or `/status` to check bot status.
+- **Note**: These are just examples.
 
 ## Events
 
@@ -440,7 +637,7 @@ Choose from one of the following terminal themes:
 
 #### Setting Up Your Terminal Theme
 
-You can configure the terminal theme in the `config.json` file, along with the admin name and title displayed in the terminal.
+You can configure the terminal theme in the `config.json` file, along with the ADMIN and TITLE displayed in the terminal.
 
 ```json
 {
@@ -456,4 +653,8 @@ Simply replace `"Fiery"`, `"Your Name"`, and `"PAGEBOT"` with your preferred the
 
 --- 
 
-Author: [Yan Maglinte](https://www.facebook.com/yandeva.me)
+## Author
+
+If you encounter issues or need support, feel free to reach out to the author:
+
+- **Yan Maglinte** (FB: [@YanMaglinte](https://www.facebook.com/yandeva.me))

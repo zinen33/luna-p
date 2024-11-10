@@ -10,22 +10,26 @@ module.exports.config = {
 };
 
 module.exports.run = function ({ event, args }) {
+  // Method 1
   api.graph({
     recipient: {
       id: event.sender.id
     },
     message: {
       attachment: {
-        type: 'image', // Specify that the attachment is an image, audio, video, file or etc.
+        type: 'image',
         payload: {
-          url: 'https://i.ibb.co/G9RBVz1/Facebook-Page-Bot-Icon.jpg', // Image URL
+          url: 'https://i.ibb.co/G9RBVz1/Facebook-Page-Bot-Icon.jpg',
           is_reusable: true
         }
       }
     }
   }).then((res) => {
-    console.log(res);
+    //console.log(res);
   }).catch((err) => {
-    console.error(err);
+    //console.error(err);
   });
+
+  // Method 2
+  api.sendAttachment("image", "https://i.ibb.co/G9RBVz1/Facebook-Page-Bot-Icon.jpg", event.sender.id);
 }

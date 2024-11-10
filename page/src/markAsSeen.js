@@ -1,51 +1,27 @@
 const axios = require("axios");
 
 module.exports = function (event) {
-  return async function markAsSeen(boolean, senderId) {
-    let form;
-    
-    if (boolean) {
-      form = {
-        recipient: {
-          id: senderId || event.sender.id,
-        },
-        sender_action: "mark_seen",
-      };
-    } else {
-      form = {
-        recipient: {
-          id: senderId || event.sender.id,
-        },
-        sender_action: "mark_unread",
-      };
-    }
+  return function markAsSeen(boolean, senderId) {
+    // Prepare the form based on the boolean value
+    const form = {
+      recipient: {
+        id: senderId || event.sender.id,
+      },
+      sender_action: boolean ? "mark_seen" : "mark_unread",
+    };
 
-    try {
-      return await Graph(form);
-    } catch (err) {
-      return err;
-    }
+    // Return the axios promise directly
+    return axios
+      .post(
+        `https://graph.facebook.com/v20.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+        form
+      )
+      .then((res) => res.data) // Return the response data
+      .catch((err) => {
+        // Handle errors and throw them
+        throw err.response ? err.response.data : err.message;
+      });
   };
-
-  function Graph(form) {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(
-          `https://graph.facebook.com/v20.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
-          form,
-        )
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          console.log(
-            "Unable to send Typing Indicator:",
-            err.response ? err.response.data : err.message,
-          );
-          reject(err.response ? err.response.data : err.message);
-        });
-    });
-  }
 };
 
 // If an error occurs please contact @YanMaglinte

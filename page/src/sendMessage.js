@@ -1,14 +1,10 @@
 const axios = require("axios");
 
 module.exports = function (event) {
-  return async function sendMessage(text, senderID) {
+  return function sendMessage(text, senderID) {
     const recipientID = senderID || event.senderID;
 
     // Function to split the message into chunks
-    // The reason for this is that Facebook's API has a limit of 2000 characters
-    // Splitting is the best option so please don't change this
-    // @YanMaglinte
-    
     function splitMessage(text) {
       const maxLength = 2000;
       const messages = [];
@@ -32,40 +28,37 @@ module.exports = function (event) {
       return messages;
     }
 
-    // The api.sendMessage can only send texts for the meanwhile, please use the api.graph() in sending links, payload, attachments, and etc.
-    
     const messages = splitMessage(text);
 
-    for (const message of messages) {
+    // Process each message chunk
+    const sendPromises = messages.map(message => {
       const form = {
         recipient: { id: recipientID },
         message: { text: message },
         messaging_type: "RESPONSE",
       };
 
-      try {
-        await Graph(form);
-      } catch (err) {
-        return err;
-      }
-    }
+      return Graph(form);
+    });
+
+    // Return a single promise that resolves when all messages are sent
+    return Promise.all(sendPromises)
+      .then(results => results)
+      .catch(err => {
+        throw err;
+      });
   };
 
   function Graph(form) {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(
-          `https://graph.facebook.com/v20.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
-          form,
-        )
-        .then(async (res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          console.log(err.response ? err.response.data : err.message);
-          reject(err.response ? err.response.data : err.message);
-        });
-    });
+    return axios
+      .post(
+        `https://graph.facebook.com/v20.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+        form
+      )
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response ? err.response.data : err.message;
+      });
   }
 };
 

@@ -6,8 +6,7 @@ module.exports.config = {
   author: "Yan Maglinte",
   version: "1.0",
   category: "Utility",
-  description:
-    "Sends a back greeting message and lists all commands and events.",
+  description: "Sends a back greeting message and lists all commands and events.",
   adminOnly: false,
   usePrefix: true,
   cooldown: 5, // Cooldown time in seconds

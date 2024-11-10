@@ -3,9 +3,11 @@ module.exports = async function (event) {
   const api = {};
   const scripts = [
     "graph",
+    "markAsSeen",
+    "sendAttachment",
+    "sendButton",
     "sendMessage",
     "sendTypingIndicator",
-    "markAsSeen",
     "setMessageReaction",
   ];
 

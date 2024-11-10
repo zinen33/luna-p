@@ -32,15 +32,15 @@ module.exports = async function (event) {
         if (rawCommandName.startsWith(config.PREFIX)) {
           commandName = rawCommandName.slice(config.PREFIX.length).toLowerCase();
         } else {
-          continue;
+          continue; // Skip if the command requires prefix but it's not used
         }
       } else {
         commandName = rawCommandName.toLowerCase();
 
-        // Notify user if they used a prefix when it's not required
-        if (rawCommandName.startsWith(config.PREFIX)) {
+        // Notify the user that the command doesn't need a prefix if they used one
+        if (rawCommandName.startsWith(config.PREFIX + command.config.name) && !command.config.usePrefix) {
           api.sendMessage(`The "${command.config.name}" command does not require a prefix. Please try again without it.`, event.sender.id);
-          continue; // Skip execution if they used a prefix by mistake
+          continue;  // Skip execution of this command if prefix is used unnecessarily
         }
       }
 

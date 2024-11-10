@@ -1,41 +1,30 @@
 const axios = require("axios");
 
 module.exports = function (event) {
-  return async function setMessageReaction(reaction, messageId) {
-    try {
-      return await Graph(reaction, messageId);
-    } catch (error) {
-      console.error("Error sending reaction:", error);
-      return null;
-    }
+  return function setMessageReaction(reaction, messageId) {
+    return Graph(reaction, messageId)
+      .then((response) => response)
+      .catch((error) => {
+        console.error("Error sending reaction:", error);
+        throw error; // Propagate the error
+      });
   };
 
-  // Note: This api can only be used to a verified business page account
-  // It won't work to normal pages
-
   function Graph(reaction, messageId) {
-    return new Promise((resolve, reject) => {
-      const payload = {
-        access_token: PAGE_ACCESS_TOKEN,
-        reaction: reaction,
-      };
+    const payload = {
+      access_token: PAGE_ACCESS_TOKEN,
+      reaction: reaction,
+    };
 
-      axios
-        .post(
-          `https://graph.facebook.com/v20.0/${messageId}/reactions`,
-          payload,
-        )
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          console.log(
-            "Unable to send message:",
-            err.response ? err.response.data : err.message,
-          );
-          reject(err.response ? err.response.data : err.message);
-        });
-    });
+    return axios
+      .post(
+        `https://graph.facebook.com/v20.0/${messageId}/reactions`,
+        payload
+      )
+      .then((res) => res.data)
+      .catch((err) => {
+        throw err.response ? err.response.data : err.message;
+      });
   }
 };
 

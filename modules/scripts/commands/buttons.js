@@ -6,37 +6,34 @@ module.exports.config = {
   description: "Sends a button message.", // Description of the command
   adminOnly: false, // Restrict command usage to admins only if set to true
   usePrefix: true, // Activates command only if prefixed, when set to true
-  cooldown: 5
+  cooldown: 5,
 };
 
 // Main code execution starts here
 // 'event' and 'args' are parameters passed by the command handler
 module.exports.run = function ({ event }) {
   // Sends a button message to the user
-  api.graph({
-    recipient: {
-      id: event.sender.id
-    },
-    message: {
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'button',
-          text: "Choose an option below:",
-          buttons: [
-            {
-              type: 'web_url',
-              url: "https://www.facebook.com/yandeva.me",
-              title: "Check Profile"
-            },
-            {
-              type: 'postback',
-              title: "Say Hello",
-              payload: "HELLO_PAYLOAD" // This payload can be used to handle postback events
-            }
-          ]
-        }
-      }
-    }
-  });
+  api
+    .sendButton(
+      "Here are your options:",
+      [
+        {
+          type: "web_url",
+          url: "https://www.facebook.com/yandeva.me",
+          title: "Check Profile",
+        },
+        {
+          type: "postback",
+          title: "Say Hello",
+          payload: "HELLO_PAYLOAD",
+        },
+      ],
+      event.sender.id,
+    )
+    .then((res) => {
+      //console.log("Response:", res);
+    })
+    .catch((err) => {
+      //console.error("Error:", err);
+    });
 };
