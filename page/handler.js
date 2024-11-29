@@ -14,7 +14,12 @@ module.exports = async function (event) {
 
   if (event?.message?.is_echo) {
     event.sender.id = event.recipient.id;
-  }
+  };
+
+  // Mark messages as seen if turned on
+  if (config.markAsSeen) {
+    api.markAsSeen(true, event.threadID).then().catch(err => console.error(err));
+  };
 
   // Extract command text and arguments from the event
   const messageText = event.message?.text || event.postback?.title || "";

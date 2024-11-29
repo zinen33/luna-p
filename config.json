@@ -16,5 +16,6 @@
       "#ff952a"
     ]
   },
-  "selfListen": false
+  "selfListen": false,
+  "markAsSeen": true
 }
