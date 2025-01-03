@@ -13,6 +13,7 @@ Pagebot (PBOT) is a user-friendly Facebook Page Bot builder designed to make bot
 - **Easy Setup**: Create and deploy your bot effortlessly—ideal for those just starting out with bot development.
 - **Customizable**: Modify the bot’s features and responses to fit your unique needs.
 - **Beginner-Friendly**: No advanced programming knowledge required; PBOT is accessible to everyone.
+- **Handle Replies**: Handles replies without the need for Page App Review.
 
 ## Why Choose Pagebot?
 

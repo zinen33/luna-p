@@ -612,10 +612,12 @@ Below are the available event types that are triggered during interactions with 
 | `message`           | A simple message sent by a sender.                                  |
 | `message_reply`     | Triggered when a sender replies to a message.                       |
 | `mark_as_seen`      | Logs when a sender marks a message as seen.                         |
+| `mark_as_delivered`      | Logs when a sender marks a message as delivered.                         |
 | `attachments`       | Triggered when an attachment (image, audio, video, or file) is sent. |
 | `postback`          | Triggered when a button is clicked.                                 |
 | `quick_reply`       | Triggered when a quick reply button is clicked.                     |
 | `message_reaction`  | Triggered when a sender reacts to a message.                        |
+| `response_feedback`  | Triggered when a sender clicks a like/dislike button feedback of a message.                        |
 
 This gives the user context on what the event types are and how they are triggered.
 
@@ -652,6 +654,61 @@ You can configure the terminal theme in the `config.json` file, along with the A
 Simply replace `"Fiery"`, `"Your Name"`, and `"PAGEBOT"` with your preferred theme, name, and title to personalize your terminal experience.
 
 --- 
+
+## Message Data
+Whenever you reply to a message, you can receive its message content without the need for Page App Review.
+
+### Replying to an attachments:
+```json
+{
+  "sender": { "id": "8044984915628464" },
+  "recipient": { "id": "392705877267020" },
+  "timestamp": 1735858742487,
+  "message": {
+    "mid": "m_23456",
+    "text": "Reply test?",
+    "reply_to": {
+      "mid": "m_2025123",
+      "text": null,
+      "attachments": [
+        { 
+          "type": "template",
+          "title": "Hey there newbie!",
+          "payload": { 
+            "template_type": "generic",
+            "sharable": false,
+            "elements": [Array] 
+          }
+        }
+      ]
+    }
+  },
+  "type": "message_reply"
+}
+```
+
+### Replying to a text:
+```json
+{
+  "sender": { "id": "8044984915628464" },
+  "recipient": { "id": "392705877267020" },
+  "timestamp": 1735858742817,
+  "message": {
+    "mid": "m_23456",
+    "text": "Reply test?",
+    "reply_to": {
+      "mid": "m_1244567",
+      "text": "Hey there! How may I help you today?",
+      "attachments": null
+    }
+  },
+  "type": "message_reply"
+}
+```
+
+The message datas are stored in `./page/data.json`. You can set it up whether you want to use less storage data through clearing it in the `config.json` by setting `clearData` into true. It will clear everytime you run the code.
+
+---
 
 ## Author
 

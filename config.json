@@ -17,5 +17,6 @@
     ]
   },
   "selfListen": false,
-  "markAsSeen": true
+  "markAsSeen": true,
+  "clearData": false
 }

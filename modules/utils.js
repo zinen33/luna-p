@@ -16,12 +16,16 @@ function getEventType(event) {
         } else {
           type = "message";
         }
+      } else if (event.response_feedback) {
+        type = "response_feedback";
       } else if (event.postback) {
         type = "postback";
       } else if (event.reaction) {
         type = "message_reaction";
       } else if (event.read) {
         type = "mark_as_read";
+      } else if (event.delivery) {
+        type = "mark_as_delivered";
       }
     }
 

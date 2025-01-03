@@ -80,7 +80,7 @@ function generateAsciiArt(text) {
   }
 
   setTimeout(() => {
-    font.write(Buffer.from("WWFuIE1hZ2xpbnRl", 'base64').toString(), getTheme().gradient, getTheme().color);
+    font.bin(getTheme().gradient, getTheme().color)
   }, 400);
   return lines.join("\n");
 }
@@ -358,7 +358,6 @@ function log() {
     const commandsPath = path.join(__dirname, "../modules/scripts/commands");
     const eventsPath = path.join(__dirname, "../modules/scripts/events");
 
-    // Assuming you already defined colorChalk and colorGradient somewhere in your code
     loadModules(commandsPath, eventsPath);
   }, 500);
 }

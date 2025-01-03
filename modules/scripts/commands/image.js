@@ -20,7 +20,7 @@ module.exports.run = function ({ event, args }) {
         type: 'image',
         payload: {
           url: 'https://i.ibb.co/G9RBVz1/Facebook-Page-Bot-Icon.jpg',
-          is_reusable: true
+          is_reusable: false
         }
       }
     }
