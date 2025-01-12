@@ -4,12 +4,12 @@
   "ADMINS": [
     ""
   ],
-  "BOTNAME": "BOTNAME",
+  "BOTNAME": "LUNA",
   "PREFIX": "/",
   "THEME_SETUP": {
     "THEME": "Fiery",
-    "ADMIN": "Your Name",
-    "TITLE": "PAGEBOT",
+    "ADMIN": "ZINO",
+    "TITLE": "luna",
     "HTML": [
       "#CE2F16",
       "#fe8916",
